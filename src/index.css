@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Telegram theme variables.
+   The values are populated at runtime in src/hooks/useTelegram.ts.
+   Fallbacks here cover the case when the app is opened outside Telegram
+   (e.g. plain browser preview).
+   ------------------------------------------------------------------ */
+:root {
+  --tg-bg: #000000;
+  --tg-bg-secondary: #0a0a0d;
+  --tg-text: #ffffff;
+  --tg-hint: #8a8f9b;
+  --tg-link: #34d399;
+  --tg-button: #10b981;
+  --tg-button-text: #ffffff;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #000000;
+  color: var(--tg-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+  /* prevent zoom on input focus on iOS */
+  -webkit-text-size-adjust: 100%;
+}
+
+html {
+  background-color: #000000;
+}
+
+/* Hide scrollbars but keep scroll capability */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Remove tap highlight */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Glassmorphism utility — dark friendly */
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl border border-white/10;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+  }
+
+  .glass-strong {
+    @apply backdrop-blur-2xl border border-white/15;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  }
+
+  .glass-light {
+    @apply backdrop-blur-xl border border-black/5;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+  }
+
+  /* Soft inner ring used on premium cards */
+  .ring-inner-light {
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Premium gradient text */
+  .text-gradient-emerald {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #facc15 0%, #eab308 50%, #ca8a04 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.12) 50%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Subtle scroll snap container */
+  .safe-pt {
+    padding-top: calc(env(safe-area-inset-top, 0px) + 1rem);
+  }
+  .safe-pb {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 5rem);
+  }
+}
+
+/* Native-feel input reset */
+input,
+button,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+/* Avoid iOS zoom on input focus by keeping font-size >= 16px on inputs */
+input,
+select {
+  font-size: 16px;
+}

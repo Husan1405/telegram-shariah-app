@@ -1,0 +1,19 @@
+# Netlify build & functions configuration.
+# The frontend (Vite) builds into `dist/`; the Telegram webhook lives in
+# `netlify/functions/bot.mjs` and is exposed at /tg/webhook.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# SPA fallback — let React Router-style deep links resolve to index.html.
+# Important: this must NOT shadow the function URL. The function declares its
+# own `path = '/tg/webhook'`, which Netlify handles before SPA rewrites.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
