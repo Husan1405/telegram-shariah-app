@@ -1,0 +1,25 @@
+# Render Blueprint — declarative deploy.
+# When you connect this repo to Render via "New → Blueprint", it reads this
+# file and provisions the service automatically.
+#
+# Env vars must be set in the Render dashboard (sync: false below).
+
+services:
+  - type: web
+    name: shariy-bot
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: main
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: '20'
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: WEB_APP_URL
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        sync: false

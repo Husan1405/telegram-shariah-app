@@ -29,6 +29,10 @@ try {
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const WEB_APP_URL = process.env.WEB_APP_URL;
+// The webhook can live on a different host than the Mini App (e.g. frontend
+// on GitHub Pages, webhook on Render). If WEBHOOK_BASE_URL isn't set, we
+// fall back to WEB_APP_URL — useful when both are on the same domain.
+const WEBHOOK_BASE_URL = process.env.WEBHOOK_BASE_URL || WEB_APP_URL;
 const SECRET = process.env.TELEGRAM_WEBHOOK_SECRET || '';
 
 if (!TOKEN || TOKEN === 'replace_me') {
@@ -42,7 +46,7 @@ if (!WEB_APP_URL || WEB_APP_URL === 'https://example.com') {
 
 const API = `https://api.telegram.org/bot${TOKEN}`;
 
-const webhookUrl = new URL('/tg/webhook', WEB_APP_URL).toString();
+const webhookUrl = new URL('/tg/webhook', WEBHOOK_BASE_URL).toString();
 
 async function call(method, payload) {
   const res = await fetch(`${API}/${method}`, {
