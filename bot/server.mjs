@@ -107,8 +107,8 @@ function readBody(req) {
 }
 
 const server = createServer(async (req, res) => {
-  // Health check — Render pings the root URL to verify the service is alive.
-  if (req.method === 'GET' && (req.url === '/' || req.url === '/health')) {
+  // Health check — accept GET and HEAD (UptimeRobot uses HEAD by default).
+  if ((req.method === 'GET' || req.method === 'HEAD') && (req.url === '/' || req.url === '/health')) {
     res.writeHead(200, { 'content-type': 'text/plain; charset=utf-8' });
     res.end('Shariah bot is alive');
     return;
